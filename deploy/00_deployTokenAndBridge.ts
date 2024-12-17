@@ -2,12 +2,11 @@ import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 /**
- * Deploys a contract named "Counter" using the deployer account and
- * constructor arguments set to the deployer address
+ * Deploys Token and Bridge contracts using the deployer account
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployCounter: DeployFunction = async function (
+const deployTokenAndBridge: DeployFunction = async function (
   hre: HardhatRuntimeEnvironment,
 ) {
   /*
@@ -24,7 +23,9 @@ const deployCounter: DeployFunction = async function (
   const { deploy } = hre.deployments;
 
   if (hre.network.name === "hardhat" && process.argv.includes("deploy")) {
-    console.warn("Warning: you are deploying to the in-process Hardhat network, but this network gets destroyed right after the deployment task ends.");
+    console.warn(
+      "Warning: you are deploying to the in-process Hardhat network, but this network gets destroyed right after the deployment task ends.",
+    );
   }
   // Fund the account before deploying.
   if (hre.network.name === "localfhenix") {
@@ -34,19 +35,27 @@ const deployCounter: DeployFunction = async function (
     }
   }
 
-  await deploy("Counter", {
+  const weerc20 = await deploy("FhenixWEERC20", {
     from: deployer,
-    // Contract constructor arguments
-    args: [],
+    args: ["Fhenix Wrapped Ether", "FWE"],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
-    autoMine: true,
+    skipIfAlreadyDeployed: false,
   });
+
+  const bridge = await deploy("FhenixBridge", {
+    from: deployer,
+    args: [weerc20.address],
+    log: true,
+    skipIfAlreadyDeployed: false,
+  });
+
+  console.log("Signer address: ", deployer);
+  console.log(`Token contract: `, weerc20.address);
+  console.log(`Bridge contract: `, bridge.address);
 };
 
-export default deployCounter;
+export default deployTokenAndBridge;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags Counter
-deployCounter.tags = ["Counter"];
+deployTokenAndBridge.tags = ["TokenAndBridge"];
