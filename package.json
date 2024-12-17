@@ -80,5 +80,8 @@
     "ts-node": "^10.9.1",
     "typechain": "^8.1.0",
     "typescript": "^5.1.6"
+  },
+  "dependencies": {
+    "fhevmjs": "0.5.2"
   }
 }

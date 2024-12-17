@@ -8,7 +8,6 @@ task("task:getBalance").setAction(async function (
 ) {
   const { ethers, deployments } = hre;
   const [signer] = await ethers.getSigners();
-  console.log(await ethers.getSigners());
 
   const FhenixWEERC20: Deployment = await deployments.get("FhenixWEERC20");
 

@@ -15,7 +15,7 @@ task("task:approveEncrypted")
   .setAction(async function (taskArguments: TaskArguments, hre) {
     const { fhenixjs, ethers, deployments } = hre;
     let { spender, amount } = taskArguments;
-    const [signer] = await ethers.getSigners();
+    const [signer, user, relayer] = await ethers.getSigners();
 
     const FhenixWEERC20: Deployment = await deployments.get("FhenixWEERC20");
 
@@ -27,7 +27,7 @@ task("task:approveEncrypted")
       "FhenixWEERC20",
       FhenixWEERC20.address,
     );
-    contract = contract.connect(signer) as unknown as FhenixWEERC20;
+    contract = contract.connect(relayer) as unknown as FhenixWEERC20;
 
     console.log(
       `Running approve(${amount}), targeting contract at: ${FhenixWEERC20.address}`,

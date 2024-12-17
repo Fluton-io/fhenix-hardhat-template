@@ -1,4 +1,4 @@
-import { WrappingERC20 } from "../typechain-types";
+import { FhenixWEERC20 } from "../typechain-types";
 import { task } from "hardhat/config";
 import type { TaskArguments } from "hardhat/types";
 import { Deployment } from "hardhat-deploy/dist/types";
@@ -11,13 +11,13 @@ task("task:transferEncrypted")
     let { to, amount } = taskArguments;
     const [signer] = await ethers.getSigners();
 
-    const FhenixWEERC20: Deployment = await deployments.get("WrappingERC20");
+    const FhenixWEERC20: Deployment = await deployments.get("FhenixWEERC20");
 
     let contract = await ethers.getContractAt(
-      "WrappingERC20",
+      "FhenixWEERC20",
       FhenixWEERC20.address,
     );
-    contract = contract.connect(signer) as unknown as WrappingERC20;
+    contract = contract.connect(signer) as unknown as FhenixWEERC20;
 
     console.log(
       `Running transferEncrypted(${to}, ${amount}), targeting contract at: ${FhenixWEERC20.address}`,
