@@ -1,8 +1,9 @@
-import { FhenixClient, getPermit } from "fhenixjs";
+import { FhenixClient, getPermit, Permit } from "fhenixjs";
 import hre from "hardhat";
 import { createInstance as createFhevmClient } from "fhevmjs";
 import { abi as fhenixContractABI } from "../utils/ABI/FhenixContractABI";
 import { abi as zamaContractABI } from "../utils/ABI/FhenixContractABI";
+import { writeFile } from "fs/promises";
 
 const fhenixBridgeContractAddress =
   "0xEE848FDad9dE793451D93D0E2028E1BFbf0759a3";
@@ -35,7 +36,7 @@ const zamaBridgeContract = new ethers.Contract(
   zamaWallet,
 );
 
-let permit; // fhenix permit
+let permit: Permit | null; // fhenix permit
 let zamaClient: any; // zama fhevm client
 
 async function main() {
@@ -46,6 +47,7 @@ async function main() {
   }
   fhenixClient.storePermit(permit, fhenixWallet.address);
   console.log("Permit", permit);
+  await writeFile("./relayer/permit.json", JSON.stringify(permit, null, 2));
 
   // set zama fhevm instance
   zamaClient = await createFhevmClient({

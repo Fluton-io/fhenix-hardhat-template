@@ -13,6 +13,7 @@ deployments
 cache
 artifacts
 typechain-types
+relayer/permit.json
 
 # files
 *.env
