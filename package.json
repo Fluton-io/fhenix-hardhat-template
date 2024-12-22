@@ -23,6 +23,7 @@
     "task:wrap": "hardhat task:wrap",
     "task:approveEncrypted": "hardhat task:approveEncrypted",
     "task:transferEncrypted": "hardhat task:transferEncrypted",
+    "task:bridge": "hardhat task:bridge",
     "-------------------": "",
     " --- localfhenix ---": "",
     "  -------------------": "",

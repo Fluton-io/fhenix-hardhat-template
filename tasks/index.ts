@@ -7,3 +7,4 @@ export * from "./getEncryptedBalances";
 export * from "./wrap";
 export * from "./approveEncrypted";
 export * from "./transferEncrypted";
+export * from "./bridge";
