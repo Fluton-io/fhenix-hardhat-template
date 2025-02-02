@@ -44,10 +44,9 @@ const config = {
   },
   defaultNetwork: "nitrogen",
   namedAccounts: {
-    deployer: {
-      // By default, it will take the first Hardhat account as the deployer
-      default: 0,
-    },
+    deployer: 0,
+    user: 1,
+    relayer: 2,
   },
   networks: {
     // View the networks that are pre-configured.
@@ -62,13 +61,29 @@ const config = {
       chainId: 8008148,
       accounts,
     },
+    fhenix: {
+      url: "https://explorer.nitrogen.fhenix.zone/api/eth-rpc",
+      chainId: 8008148,
+    },
     localhost: {
       chainId: 31337,
     },
   },
   // configuration for harhdat-verify plugin
   etherscan: {
-    apiKey: `${etherscanApiKey}`,
+    apiKey: {
+      fhenix: "empty",
+    },
+    customChains: [
+      {
+        network: "fhenix",
+        chainId: 8008148,
+        urls: {
+          apiURL: "https://explorer.nitrogen.fhenix.zone/api",
+          browserURL: "http://https://explorer.nitrogen.fhenix.zone",
+        },
+      },
+    ],
   },
   // configuration for etherscan-verify from hardhat-deploy plugin
   verify: {
@@ -78,6 +93,10 @@ const config = {
   },
   sourcify: {
     enabled: false,
+  },
+  typechain: {
+    outDir: "types",
+    target: "ethers-v6",
   },
 };
 

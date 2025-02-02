@@ -1,12 +1,6 @@
 export const abi = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_tokenAddress",
-        type: "address",
-      },
-    ],
+    inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -37,24 +31,12 @@ export const abi = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "euint32",
-        name: "amount",
-        type: "uint256",
+        internalType: "uint64",
+        name: "intentId",
+        type: "uint64",
       },
     ],
-    name: "IntentProcesses",
+    name: "IntentProcessed",
     type: "event",
   },
   {
@@ -100,6 +82,12 @@ export const abi = [
     inputs: [
       {
         indexed: false,
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
         internalType: "eaddress",
         name: "encryptedTo",
         type: "uint256",
@@ -141,6 +129,11 @@ export const abi = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
       {
         components: [
           {
@@ -203,6 +196,11 @@ export const abi = [
     outputs: [
       {
         internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
         name: "from",
         type: "address",
       },
@@ -235,6 +233,11 @@ export const abi = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
       {
         internalType: "address",
         name: "_to",
@@ -310,20 +313,12 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "weerc20",
-    outputs: [
+    inputs: [
       {
-        internalType: "contract IFhenixWEERC20",
-        name: "",
+        internalType: "address",
+        name: "tokenAddress",
         type: "address",
       },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
       {
         components: [
           {

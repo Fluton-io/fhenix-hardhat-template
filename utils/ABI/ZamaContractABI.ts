@@ -1,12 +1,6 @@
-export const zamaContractABI = [
+export const abi = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_tokenAddress",
-        type: "address",
-      },
-    ],
+    inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -37,21 +31,9 @@ export const zamaContractABI = [
     inputs: [
       {
         indexed: true,
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        indexed: true,
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "euint64",
-        name: "encryptedAmount",
-        type: "uint256",
+        internalType: "uint64",
+        name: "intentId",
+        type: "uint64",
       },
     ],
     name: "IntentProcessed",
@@ -100,6 +82,12 @@ export const zamaContractABI = [
     inputs: [
       {
         indexed: false,
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        indexed: false,
         internalType: "eaddress",
         name: "to",
         type: "uint256",
@@ -121,19 +109,6 @@ export const zamaContractABI = [
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "uint256",
-        name: "num",
-        type: "uint256",
-      },
-    ],
-    name: "TestPacket",
-    type: "event",
-  },
-  {
     inputs: [],
     name: "acceptOwnership",
     outputs: [],
@@ -142,6 +117,11 @@ export const zamaContractABI = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
       {
         internalType: "einput",
         name: "_encryptedTo",
@@ -163,22 +143,9 @@ export const zamaContractABI = [
         type: "address",
       },
     ],
-    name: "bridgeWEERC20",
+    name: "bridgeCERC20",
     outputs: [],
     stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "gateway",
-    outputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    stateMutability: "view",
     type: "function",
   },
   {
@@ -191,6 +158,11 @@ export const zamaContractABI = [
     ],
     name: "intents",
     outputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
       {
         internalType: "address",
         name: "from",
@@ -225,6 +197,11 @@ export const zamaContractABI = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
       {
         internalType: "address",
         name: "_to",
@@ -280,13 +257,6 @@ export const zamaContractABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "testEmit",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -300,20 +270,12 @@ export const zamaContractABI = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "weerc20",
-    outputs: [
+    inputs: [
       {
-        internalType: "contract IZamaWEERC20",
-        name: "",
+        internalType: "address",
+        name: "tokenAddress",
         type: "address",
       },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
       {
         internalType: "einput",
         name: "_encryptedAmount",

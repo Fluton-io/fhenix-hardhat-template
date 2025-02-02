@@ -5,7 +5,7 @@ import "@fhenixprotocol/contracts/access/Permissioned.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@fhenixprotocol/contracts/FHE.sol";
 
-contract FhenixWEERC20 is ERC20, Permissioned {
+contract cUSDC is ERC20, Permissioned {
   uint8 public constant encDecimals = 6;
 
   mapping(address => euint32) internal _encBalances;
@@ -21,7 +21,7 @@ contract FhenixWEERC20 is ERC20, Permissioned {
     return FHE.decrypt(_encBalances[msg.sender]);
   }
 
-  function getCounterPermitSealed(
+  function getPermitSealed(
     Permission memory permission
   ) public view onlySender(permission) returns (string memory) {
     return FHE.sealoutput(_encBalances[msg.sender], permission.publicKey);

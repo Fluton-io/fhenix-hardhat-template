@@ -18,9 +18,8 @@ interface IFhenixWEERC20 {
 }
 
 contract FhenixBridge is Ownable2Step {
-  IFhenixWEERC20 public weerc20;
-
   struct Intent {
+    address tokenAddress;
     address from;
     address to;
     euint32 amount;
@@ -31,29 +30,29 @@ contract FhenixBridge is Ownable2Step {
   mapping(uint64 => Intent) public intents;
 
   event Packet(
+    address tokenAddress,
     eaddress encryptedTo,
     euint32 encryptedAmount,
     string toPermit,
     string amountPermit,
     address relayerAddress
   );
-  event IntentProcesses(
-    address indexed from,
-    address indexed to,
-    euint32 amount
-  );
+  event IntentProcessed(uint64 indexed intentId);
 
-  constructor(address _tokenAddress) Ownable(msg.sender) {
-    weerc20 = IFhenixWEERC20(_tokenAddress);
-  }
+  constructor() Ownable(msg.sender) {}
 
   function bridgeWEERC20(
+    address tokenAddress,
     inEaddress calldata _encryptedTo,
     inEuint32 calldata _encryptedAmount,
     address _relayerAddress,
     bytes32 _relayerSeal
   ) public {
-    weerc20.transferFromEncrypted(msg.sender, address(this), _encryptedAmount);
+    IFhenixWEERC20(tokenAddress).transferFromEncrypted(
+      msg.sender,
+      address(this),
+      _encryptedAmount
+    );
 
     eaddress to = FHE.asEaddress(_encryptedTo);
     euint32 amount = FHE.asEuint32(_encryptedAmount);
@@ -61,25 +60,48 @@ contract FhenixBridge is Ownable2Step {
     string memory toPermit = FHE.sealoutput(to, _relayerSeal);
     string memory amountPermit = FHE.sealoutput(amount, _relayerSeal);
 
-    emit Packet(to, amount, toPermit, amountPermit, _relayerAddress);
+    emit Packet(
+      tokenAddress,
+      to,
+      amount,
+      toPermit,
+      amountPermit,
+      _relayerAddress
+    );
   }
 
   function onRecvIntent(
+    address tokenAddress,
     address _to,
     inEuint32 calldata _encryptedAmount
   ) public {
-    weerc20.transferFromEncrypted(msg.sender, _to, _encryptedAmount);
+    IFhenixWEERC20(tokenAddress).transferFromEncrypted(
+      msg.sender,
+      _to,
+      _encryptedAmount
+    );
 
     euint32 amount = FHE.asEuint32(_encryptedAmount);
 
     nextIntentId++;
-    Intent memory intent = Intent({from: msg.sender, to: _to, amount: amount});
+    Intent memory intent = Intent({
+      tokenAddress: tokenAddress,
+      from: msg.sender,
+      to: _to,
+      amount: amount
+    });
     intents[nextIntentId] = intent;
 
-    emit IntentProcesses(msg.sender, _to, amount);
+    emit IntentProcessed(nextIntentId);
   }
 
-  function withdraw(inEuint32 calldata _encryptedAmount) public onlyOwner {
-    weerc20.transferEncrypted(msg.sender, _encryptedAmount);
+  function withdraw(
+    address tokenAddress,
+    inEuint32 calldata _encryptedAmount
+  ) public onlyOwner {
+    IFhenixWEERC20(tokenAddress).transferEncrypted(
+      msg.sender,
+      _encryptedAmount
+    );
   }
 }

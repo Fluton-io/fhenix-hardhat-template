@@ -35,16 +35,16 @@ const deployTokenAndBridge: DeployFunction = async function (
     }
   }
 
-  const weerc20 = await deploy("FhenixWEERC20", {
+  const weerc20 = await deploy("cUSDC", {
     from: deployer,
-    args: ["Fhenix Wrapped Ether", "FWE"],
+    args: ["Confidential USDC Test Token", "USDC.tc"],
     log: true,
     skipIfAlreadyDeployed: false,
   });
 
   const bridge = await deploy("FhenixBridge", {
     from: deployer,
-    args: [weerc20.address],
+    args: [],
     log: true,
     skipIfAlreadyDeployed: false,
   });
