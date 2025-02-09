@@ -15,6 +15,13 @@ contract cUSDC is ERC20, Permissioned {
     _mint(msg.sender, 1000000 * 10 ** uint(decimals()));
   }
 
+  function encryptedAllowance(
+    Permission calldata perm,
+    address spender
+  ) external view onlySender(perm) returns (uint256) {
+    return FHE.decrypt(_allowances[msg.sender][spender]);
+  }
+
   function encryptedBalanceOf(
     Permission calldata perm
   ) external view onlySender(perm) returns (uint256) {
