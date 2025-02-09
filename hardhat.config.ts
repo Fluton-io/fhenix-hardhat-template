@@ -61,10 +61,6 @@ const config = {
       chainId: 8008148,
       accounts,
     },
-    fhenix: {
-      url: "https://explorer.nitrogen.fhenix.zone/api/eth-rpc",
-      chainId: 8008148,
-    },
     localhost: {
       chainId: 31337,
     },
@@ -72,11 +68,11 @@ const config = {
   // configuration for harhdat-verify plugin
   etherscan: {
     apiKey: {
-      fhenix: "empty",
+      nitrogen: "empty",
     },
     customChains: [
       {
-        network: "fhenix",
+        network: "nitrogen",
         chainId: 8008148,
         urls: {
           apiURL: "https://explorer.nitrogen.fhenix.zone/api",

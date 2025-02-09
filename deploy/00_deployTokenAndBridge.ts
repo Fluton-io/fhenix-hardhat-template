@@ -1,5 +1,6 @@
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { sleep } from "../utils";
 
 /**
  * Deploys Token and Bridge contracts using the deployer account
@@ -35,9 +36,11 @@ const deployTokenAndBridge: DeployFunction = async function (
     }
   }
 
+  const args = ["Confidential USDC Test Token", "USDC.tc"];
+
   const weerc20 = await deploy("cUSDC", {
     from: deployer,
-    args: ["Confidential USDC Test Token", "USDC.tc"],
+    args,
     log: true,
     skipIfAlreadyDeployed: false,
   });
@@ -52,6 +55,22 @@ const deployTokenAndBridge: DeployFunction = async function (
   console.log("Signer address: ", deployer);
   console.log(`Token contract: `, weerc20.address);
   console.log(`Bridge contract: `, bridge.address);
+  console.log(`Verifying the token contract: `, weerc20.address);
+  await sleep(30000); // wait for etherscan to index the contract
+  const verificationArgsToken = {
+    address: weerc20.address,
+    contract: "contracts/FhenixWEERC20.sol:cUSDC",
+    constructorArguments: args,
+  };
+  await hre.run("verify:verify", verificationArgsToken);
+
+  console.log(`Verifying the bridge contract: `, bridge.address);
+  const verificationArgsBridge = {
+    address: weerc20.address,
+    contract: "contracts/FhenixBridge.sol:FhenixBridge",
+    constructorArguments: [],
+  };
+  await hre.run("verify:verify", verificationArgsBridge);
 };
 
 export default deployTokenAndBridge;
