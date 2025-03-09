@@ -29,9 +29,9 @@ task("bridge")
       relayerSeal = permit.publicKey;
     }
 
-    const FhenixBridge: Deployment = await deployments.get("FhenixBridge");
+    const FhenixBridge: Deployment = await deployments.get("FHEBridge");
     let contract = await ethers.getContractAt(
-      "FhenixBridge",
+      "FHEBridge",
       FhenixBridge.address,
       user,
     );
@@ -41,8 +41,8 @@ task("bridge")
     );
 
     const encryptedTo = await fhenixjs.encrypt_address(receiver);
-    const encryptedAmount = await fhenixjs.encrypt_uint32(+amount);
-    await contract.bridgeWEERC20(
+    const encryptedAmount = await fhenixjs.encrypt_uint64(amount);
+    await contract.bridgeCERC20(
       tokenaddress,
       encryptedTo,
       encryptedAmount,
