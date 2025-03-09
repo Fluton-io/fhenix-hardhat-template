@@ -38,14 +38,14 @@ const deployTokenAndBridge: DeployFunction = async function (
 
   const args = ["Confidential USDC Test Token", "USDC.tc"];
 
-  const weerc20 = await deploy("cUSDC", {
+  const cerc20 = await deploy("cUSDC", {
     from: deployer,
     args,
     log: true,
     skipIfAlreadyDeployed: false,
   });
 
-  const bridge = await deploy("FhenixBridge", {
+  const bridge = await deploy("FHEBridge", {
     from: deployer,
     args: [],
     log: true,
@@ -53,21 +53,21 @@ const deployTokenAndBridge: DeployFunction = async function (
   });
 
   console.log("Signer address: ", deployer);
-  console.log(`Token contract: `, weerc20.address);
+  console.log(`Token contract: `, cerc20.address);
   console.log(`Bridge contract: `, bridge.address);
-  console.log(`Verifying the token contract: `, weerc20.address);
+  console.log(`Verifying the token contract: `, cerc20.address);
   await sleep(30000); // wait for etherscan to index the contract
   const verificationArgsToken = {
-    address: weerc20.address,
-    contract: "contracts/FhenixWEERC20.sol:cUSDC",
+    address: cerc20.address,
+    contract: "contracts/cERC20.sol:cUSDC",
     constructorArguments: args,
   };
   await hre.run("verify:verify", verificationArgsToken);
 
   console.log(`Verifying the bridge contract: `, bridge.address);
   const verificationArgsBridge = {
-    address: weerc20.address,
-    contract: "contracts/FhenixBridge.sol:FhenixBridge",
+    address: cerc20.address,
+    contract: "contracts/FHEBridge.sol:FHEBridge",
     constructorArguments: [],
   };
   await hre.run("verify:verify", verificationArgsBridge);

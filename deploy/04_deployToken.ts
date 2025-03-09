@@ -1,12 +1,13 @@
 import { DeployFunction } from "hardhat-deploy/types";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { sleep } from "../utils";
 
 /**
- * Deploys Token and Bridge contracts using the deployer account
+ * Deploys Token contract using the deployer account
  *
  * @param hre HardhatRuntimeEnvironment object.
  */
-const deployTokenAndBridge: DeployFunction = async function (
+const deployToken: DeployFunction = async function (
   hre: HardhatRuntimeEnvironment,
 ) {
   /*
@@ -35,19 +36,29 @@ const deployTokenAndBridge: DeployFunction = async function (
     }
   }
 
-  const cerc20 = await deploy("WrappingERC20", {
+  const args = ["Confidential USDC Test Token", "USDC.tc"];
+
+  const cerc20 = await deploy("cUSDC", {
     from: deployer,
-    args: ["Fhenix Wrapped Ether", "FWE"],
+    args,
     log: true,
     skipIfAlreadyDeployed: false,
   });
 
   console.log("Signer address: ", deployer);
   console.log(`Token contract: `, cerc20.address);
+  console.log(`Verifying the token contract: `, cerc20.address);
+  await sleep(30000); // wait for etherscan to index the contract
+  const verificationArgsToken = {
+    address: cerc20.address,
+    contract: "contracts/cERC20.sol:cUSDC",
+    constructorArguments: args,
+  };
+  await hre.run("verify:verify", verificationArgsToken);
 };
 
-export default deployTokenAndBridge;
+export default deployToken;
 
 // Tags are useful if you have multiple deploy files and only want to run one of them.
 // e.g. yarn deploy --tags Counter
-deployTokenAndBridge.tags = ["WrappingERC20"];
+deployToken.tags = ["Token"];

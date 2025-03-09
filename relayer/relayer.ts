@@ -16,9 +16,7 @@ const { fhenixjs, ethers } = hre;
 
 const fhenixProvider = ethers.provider;
 
-const sepoliaProvider = new ethers.JsonRpcProvider(
-  "https://eth-sepolia-public.unifra.io",
-);
+const sepoliaProvider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
 
 const sepoliaWallet = new ethers.Wallet(
   process.env.RELAYER_PRIVATE_KEY!,
@@ -164,7 +162,9 @@ async function main() {
     console.log("to is", hexAddress);
     console.log("amount is", readableAmount);
 
-    const encryptedAmount = await fhenixjs.encrypt_uint32(+readableAmount);
+    const encryptedAmount = await fhenixjs.encrypt_uint64(
+      BigInt(readableAmount),
+    );
     const tokenAddressOnFhenix = tokenMapping[log1];
     console.log("Token Address on Fhenix", tokenAddressOnFhenix);
     const onRecvIntentResult = await fhenixBridgeContract.onRecvIntent(
