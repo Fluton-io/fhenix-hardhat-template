@@ -4,3 +4,8 @@ export * from "./cERC20/wrap";
 export * from "./cERC20/approve";
 export * from "./cERC20/transferFrom";
 export * from "./cERC20/allowance";
+export * from "./faucet/requestTokens";
+export * from "./faucet/setWaitTime";
+export * from "./faucet/setMaxReceivableTokenAmount";
+export * from "./faucet/allowedToWithdraw";
+export * from "./faucet/nextAccessTime";
