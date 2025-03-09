@@ -37,9 +37,4 @@ task("allowance", "Get user allowance")
       spenderaddress,
     );
     console.log(`got result: ${encryptedResult.toString()}`);
-
-    const sealedResult = await contract.getPermitSealed(permit);
-    let unsealed = fhenixjs.unseal(tokenaddress, sealedResult, signer.address);
-
-    console.log(`got unsealed result: ${unsealed.toString()}`);
   });

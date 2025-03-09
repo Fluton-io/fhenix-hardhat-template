@@ -1,4 +1,5 @@
 import { task } from "hardhat/config";
+import { Typed } from "ethers";
 
 task("approve", "Approve cERC20 contract to spend USDC")
   .addParam("signeraddress", "signer address")
@@ -16,8 +17,11 @@ task("approve", "Approve cERC20 contract to spend USDC")
         `Running approve(${spenderaddress}, ${amount}), targeting contract at: ${tokenaddress}`,
       );
 
-      const encryptedAmount = await fhenixjs.encrypt_uint32(+amount);
-      await contract.approveEncrypted(spenderaddress, encryptedAmount);
+      const encryptedAmount = await fhenixjs.encrypt_uint64(BigInt(amount));
+      await await contract["approveEncrypted(address,(bytes,int32))"](
+        spenderaddress,
+        encryptedAmount,
+      );
 
       console.log(`Approved successfully`);
     },

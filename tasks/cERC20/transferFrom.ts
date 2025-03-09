@@ -19,12 +19,17 @@ task("transferFrom", "Get user balance")
 
     let contract = await ethers.getContractAt("cUSDC", tokenaddress, user);
 
-    // contract = contract.connect(signer) as unknown as FhenixWEERC20;
+    // contract = contract.connect(signer) as unknown as FhenixCERC20;
 
+    console.log("Using address: ", user.address);
     console.log(`Running transferFrom, targeting contract at: ${tokenaddress}`);
 
-    const encryptedAmount = await fhenixjs.encrypt_uint32(+amount);
-    await contract.transferFromEncrypted(from, to, encryptedAmount);
+    const encryptedAmount = await fhenixjs.encrypt_uint64(BigInt(amount));
+    await contract["transferFromEncrypted(address,address,(bytes,int32))"](
+      from,
+      to,
+      encryptedAmount,
+    );
 
     console.log(`Transferred successfully`);
   });
