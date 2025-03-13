@@ -28,7 +28,7 @@ const addresses: { [key: number]: { [key: string]: string } } = {
     U: "",
 
     cWETH: "",
-    cUSDC: "0xD4c0b270B69E7A74E3B83585C995692e6d4E0999",
+    cUSDC: "0xf9B226035180AB9E3C7ec155332d79B74c9ED6D5",
     cUSDT: "",
     cUNI: "",
     cU: "",
