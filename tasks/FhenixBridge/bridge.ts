@@ -6,22 +6,24 @@ task("bridge")
   .addParam("tokenaddress", "cERC20 contract address")
   .addOptionalParam("receiver", "receiver address")
   .addOptionalParam("amount", "amount to bridge", "1000000") // 1 cERC20
-  .addOptionalParam("relayerAddress", "Relayer address")
+  .addOptionalParam("relayeraddress", "Relayer address")
   .addOptionalParam("relayerSeal", "Relayer seal")
   .setAction(async function (
-    { tokenaddress, receiver, amount, relayerAddress, relayerSeal },
+    { tokenaddress, receiver, amount, relayeraddress, relayerSeal },
     hre,
   ) {
     const { ethers, deployments, fhenixjs } = hre;
     const [_, user, relayer] = await ethers.getSigners();
 
-    if (!relayerAddress) {
-      relayerAddress = relayer.address;
+    if (!relayeraddress) {
+      relayeraddress = relayer.address;
     }
 
     if (!receiver) {
       receiver = user.address;
     }
+
+    const destinationChainId = 3;
 
     if (!relayerSeal) {
       const permitString = await readFile("./relayer/permit.json", "utf-8");
@@ -37,16 +39,23 @@ task("bridge")
     );
 
     console.log(
-      `Running bridge(${tokenaddress}, ${receiver}, ${amount}, ${relayerAddress}, ${relayerSeal}), targeting contract at: ${FhenixBridge.address}`,
+      `Running bridge(${tokenaddress}, ${receiver}, ${amount}, ${relayeraddress}, ${relayerSeal}), targeting contract at: ${FhenixBridge.address}`,
     );
 
-    const encryptedTo = await fhenixjs.encrypt_address(receiver);
-    const encryptedAmount = await fhenixjs.encrypt_uint64(amount);
-    await contract.bridgeCERC20(
+    const encryptedAmount = await fhenixjs.encrypt_uint64(BigInt(amount));
+
+    console.log("USER: ", user.address);
+    const tx = await contract.bridge(
+      user.address,
+      receiver,
+      relayeraddress,
       tokenaddress,
-      encryptedTo,
+      tokenaddress,
       encryptedAmount,
-      relayerAddress,
+      encryptedAmount,
+      destinationChainId,
       relayerSeal,
     );
+
+    console.log("Bridge successful! ", tx);
   });
