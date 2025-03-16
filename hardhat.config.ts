@@ -21,7 +21,7 @@ const providerApiKey =
 // If not set, it uses the hardhat account 0 private key.
 const deployerPrivateKey =
   process.env.DEPLOYER_PRIVATE_KEY ??
-  "0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80";
+  "c0bd6bd22cd0016de1ae4a2a5758f74b3375c335b98dd561c4f45aaa77821b7d";
 
 const relayerPrivateKey = process.env.RELAYER_PRIVATE_KEY;
 const userPrivateKey = process.env.USER_PRIVATE_KEY;
@@ -40,6 +40,7 @@ const config = {
         // https://docs.soliditylang.org/en/latest/using-the-compiler.html#optimizer-options
         runs: 200,
       },
+      viaIR: true,
     },
   },
   defaultNetwork: "nitrogen",

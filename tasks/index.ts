@@ -1,4 +1,5 @@
 export * from "./FhenixBridge/bridge";
+export * from "./FhenixBridge/fulfill";
 export * from "./cERC20/balanceOf";
 export * from "./cERC20/wrap";
 export * from "./cERC20/approve";
