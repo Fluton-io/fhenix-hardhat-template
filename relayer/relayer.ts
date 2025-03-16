@@ -9,7 +9,7 @@ import { GATEWAY_URL } from "../config/constants";
 import tokenMapping from "../config/tokenMapping";
 
 const fhenixBridgeContractAddress =
-  "0xb98c94D5725c2888B5AD2f0bcf1CDb31889086c7";
+  "0xF41561BF42418B69791f026a97CF9e4F8BC95703";
 const zamaBridgeContractAddress = "0x8f8AFfC05CFE28D76038AcDbb624DBd3d89116EE";
 
 const { fhenixjs, ethers } = hre;

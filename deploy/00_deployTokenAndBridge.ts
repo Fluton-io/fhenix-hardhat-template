@@ -66,7 +66,7 @@ const deployTokenAndBridge: DeployFunction = async function (
 
   console.log(`Verifying the bridge contract: `, bridge.address);
   const verificationArgsBridge = {
-    address: cerc20.address,
+    address: bridge.address,
     contract: "contracts/FHEBridge.sol:FHEBridge",
     constructorArguments: [],
   };
