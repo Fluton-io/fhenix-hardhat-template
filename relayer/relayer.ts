@@ -1,16 +1,16 @@
 import { FhenixClient, getPermit, Permit } from "fhenixjs";
 import hre from "hardhat";
 import { createInstance as createFhevmClient } from "fhevmjs";
-import { abi as fhenixContractABI } from "../utils/ABI/FhenixContractABI";
-import { abi as zamaContractABI } from "../utils/ABI/ZamaContractABI";
+import fhenixContractABI from "../utils/ABI/FhenixContractABI";
+import zamaContractABI from "../utils/ABI/ZamaContractABI";
 import { writeFile } from "fs/promises";
 import addresses from "../config/addresses";
 import { GATEWAY_URL } from "../config/constants";
 import tokenMapping from "../config/tokenMapping";
 
 const fhenixBridgeContractAddress =
-  "0xF41561BF42418B69791f026a97CF9e4F8BC95703";
-const zamaBridgeContractAddress = "0x8f8AFfC05CFE28D76038AcDbb624DBd3d89116EE";
+  "0x353EA08f9cEB8b23A3496e6A24C019Ebb091AcA6";
+const zamaBridgeContractAddress = "0xA7074187981A9Bea5DE4205e6B79FBD01F89B1B6";
 
 const { fhenixjs, ethers } = hre;
 
@@ -59,58 +59,48 @@ async function main() {
   zamaClient = await createFhevmClient({
     kmsContractAddress: addresses[11155111].KMSVERIFIER,
     aclContractAddress: addresses[11155111].ACL,
-    networkUrl: "https://eth-sepolia.public.blastapi.io",
+    networkUrl: process.env.SEPOLIA_RPC_URL,
     gatewayUrl: GATEWAY_URL,
   });
-
-  /*   const { publicKey, privateKey: reEncryptPrivateKey } =
-    zamaClient.generateKeypair();
-
-  const eip712 = zamaClient.createEIP712(publicKey, zamaBridgeContractAddress);
-
-  const signature = await zamaWallet.signMessage(JSON.stringify(eip712)); */
 
   console.log("Running the relayer as address", fhenixWallet.address);
 
   // listen for packet events
-  fhenixBridgeContract.on(
-    "Packet",
-    async (log1, log2, log3, log4, log5, log6) => {
-      console.log("Packet Events", log1, log2, log3, log4, log5, log6);
+  fhenixBridgeContract.on("IntentCreated", async (log1, log2, log3) => {
+    console.log("Packet Events", log1, log2, log3);
 
-      const clearTo = `0x${fhenixClient
-        .unseal(fhenixBridgeContractAddress, log4, fhenixWallet.address)
-        .toString(16)}`;
-      const clearAmount = fhenixClient.unseal(
-        fhenixBridgeContractAddress,
-        log5,
-        fhenixWallet.address,
-      );
+    const clearTo = `0x${fhenixClient
+      .unseal(fhenixBridgeContractAddress, log2, fhenixWallet.address)
+      .toString(16)}`;
+    const clearAmount = fhenixClient.unseal(
+      fhenixBridgeContractAddress,
+      log2,
+      fhenixWallet.address,
+    );
 
-      console.log("Clear To", clearTo);
-      console.log("Clear Amount", clearAmount);
+    console.log("Clear To", clearTo);
+    console.log("Clear Amount", clearAmount);
 
-      const einput = zamaClient.createEncryptedInput(
-        zamaBridgeContractAddress,
-        fhenixWallet.address,
-      );
-      const einputs = await einput.add64(clearAmount).encrypt();
+    const einput = zamaClient.createEncryptedInput(
+      zamaBridgeContractAddress,
+      fhenixWallet.address,
+    );
+    const einputs = await einput.add64(clearAmount).encrypt();
 
-      console.log("encrypted inputs, calling onRecvIntent on Zama");
+    console.log("encrypted inputs, calling onRecvIntent on Zama");
 
-      const tokenAddressOnSepolia = tokenMapping[log1];
-      console.log("Token Address on Sepolia", tokenAddressOnSepolia);
+    const tokenAddressOnSepolia = tokenMapping[log1];
+    console.log("Token Address on Sepolia", tokenAddressOnSepolia);
 
-      const onRecvIntentResult = await zamaBridgeContract.onRecvIntent(
-        tokenAddressOnSepolia,
-        clearTo,
-        einputs.handles[0],
-        einputs.inputProof,
-      );
+    const onRecvIntentResult = await zamaBridgeContract.onRecvIntent(
+      tokenAddressOnSepolia,
+      clearTo,
+      einputs.handles[0],
+      einputs.inputProof,
+    );
 
-      console.log("onRecvIntent called on Zama: ", onRecvIntentResult);
-    },
-  );
+    console.log("onRecvIntent called on Zama: ", onRecvIntentResult);
+  });
 
   /*   zamaBridgeContract.on("IntentProcessed", (log1, log2, log3) => {
     console.log("Intent Processed", log1, log2, log3);

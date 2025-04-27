@@ -1,4 +1,4 @@
-export const abi = [
+const abi = [
   {
     inputs: [],
     stateMutability: "nonpayable",
@@ -27,16 +27,230 @@ export const abi = [
     type: "error",
   },
   {
+    inputs: [],
+    name: "UnauthorizedRelayer",
+    type: "error",
+  },
+  {
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: "uint64",
-        name: "intentId",
-        type: "uint64",
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "receiver",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "relayer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "inputToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "outputToken",
+            type: "address",
+          },
+          {
+            internalType: "euint64",
+            name: "inputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "euint64",
+            name: "outputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "originChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "destinationChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "enum FHEBridge.FilledStatus",
+            name: "filledStatus",
+            type: "uint8",
+          },
+        ],
+        indexed: false,
+        internalType: "struct FHEBridge.Intent",
+        name: "intent",
+        type: "tuple",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "inputAmountSealed",
+        type: "string",
+      },
+      {
+        indexed: false,
+        internalType: "string",
+        name: "outputAmountSealed",
+        type: "string",
       },
     ],
-    name: "IntentProcessed",
+    name: "IntentCreated",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "receiver",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "relayer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "inputToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "outputToken",
+            type: "address",
+          },
+          {
+            internalType: "euint64",
+            name: "inputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "euint64",
+            name: "outputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "originChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "destinationChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "enum FHEBridge.FilledStatus",
+            name: "filledStatus",
+            type: "uint8",
+          },
+        ],
+        indexed: false,
+        internalType: "struct FHEBridge.Intent",
+        name: "intent",
+        type: "tuple",
+      },
+    ],
+    name: "IntentFulfilled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "receiver",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "relayer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "inputToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "outputToken",
+            type: "address",
+          },
+          {
+            internalType: "euint64",
+            name: "inputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "euint64",
+            name: "outputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "originChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "destinationChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "enum FHEBridge.FilledStatus",
+            name: "filledStatus",
+            type: "uint8",
+          },
+        ],
+        indexed: false,
+        internalType: "struct FHEBridge.Intent",
+        name: "intent",
+        type: "tuple",
+      },
+    ],
+    name: "IntentRepaid",
     type: "event",
   },
   {
@@ -78,49 +292,6 @@ export const abi = [
     type: "event",
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        indexed: false,
-        internalType: "eaddress",
-        name: "encryptedTo",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "euint32",
-        name: "encryptedAmount",
-        type: "uint256",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "toPermit",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "string",
-        name: "amountPermit",
-        type: "string",
-      },
-      {
-        indexed: false,
-        internalType: "address",
-        name: "relayerAddress",
-        type: "address",
-      },
-    ],
-    name: "Packet",
-    type: "event",
-  },
-  {
     inputs: [],
     name: "acceptOwnership",
     outputs: [],
@@ -131,47 +302,67 @@ export const abi = [
     inputs: [
       {
         internalType: "address",
-        name: "tokenAddress",
+        name: "_sender",
         type: "address",
-      },
-      {
-        components: [
-          {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
-          },
-          {
-            internalType: "int32",
-            name: "securityZone",
-            type: "int32",
-          },
-        ],
-        internalType: "struct inEaddress",
-        name: "_encryptedTo",
-        type: "tuple",
-      },
-      {
-        components: [
-          {
-            internalType: "bytes",
-            name: "data",
-            type: "bytes",
-          },
-          {
-            internalType: "int32",
-            name: "securityZone",
-            type: "int32",
-          },
-        ],
-        internalType: "struct inEuint32",
-        name: "_encryptedAmount",
-        type: "tuple",
       },
       {
         internalType: "address",
-        name: "_relayerAddress",
+        name: "_receiver",
         type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_relayer",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_inputToken",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_outputToken",
+        type: "address",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            internalType: "int32",
+            name: "securityZone",
+            type: "int32",
+          },
+        ],
+        internalType: "struct inEuint64",
+        name: "_encInputAmount",
+        type: "tuple",
+      },
+      {
+        components: [
+          {
+            internalType: "bytes",
+            name: "data",
+            type: "bytes",
+          },
+          {
+            internalType: "int32",
+            name: "securityZone",
+            type: "int32",
+          },
+        ],
+        internalType: "struct inEuint64",
+        name: "_encOutputAmount",
+        type: "tuple",
+      },
+      {
+        internalType: "uint32",
+        name: "_destinationChainId",
+        type: "uint32",
       },
       {
         internalType: "bytes32",
@@ -179,7 +370,7 @@ export const abi = [
         type: "bytes32",
       },
     ],
-    name: "bridgeWEERC20",
+    name: "bridge",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -187,45 +378,17 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
-      },
-    ],
-    name: "intents",
-    outputs: [
-      {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "euint32",
-        name: "amount",
+        internalType: "uint256",
+        name: "intentId",
         type: "uint256",
       },
     ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "nextIntentId",
+    name: "doesIntentExist",
     outputs: [
       {
-        internalType: "uint64",
-        name: "",
-        type: "uint64",
+        internalType: "bool",
+        name: "exists",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -234,14 +397,66 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "tokenAddress",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "_to",
-        type: "address",
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "receiver",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "relayer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "inputToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "outputToken",
+            type: "address",
+          },
+          {
+            internalType: "euint64",
+            name: "inputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "euint64",
+            name: "outputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "originChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "destinationChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "enum FHEBridge.FilledStatus",
+            name: "filledStatus",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct FHEBridge.Intent",
+        name: "intent",
+        type: "tuple",
       },
       {
         components: [
@@ -256,12 +471,82 @@ export const abi = [
             type: "int32",
           },
         ],
-        internalType: "struct inEuint32",
-        name: "_encryptedAmount",
+        internalType: "struct inEuint64",
+        name: "_outputAmount",
         type: "tuple",
       },
     ],
-    name: "onRecvIntent",
+    name: "fulfill",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "sender",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "receiver",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "relayer",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "inputToken",
+            type: "address",
+          },
+          {
+            internalType: "address",
+            name: "outputToken",
+            type: "address",
+          },
+          {
+            internalType: "euint64",
+            name: "inputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "euint64",
+            name: "outputAmount",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "id",
+            type: "uint256",
+          },
+          {
+            internalType: "uint32",
+            name: "originChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "uint32",
+            name: "destinationChainId",
+            type: "uint32",
+          },
+          {
+            internalType: "enum FHEBridge.FilledStatus",
+            name: "filledStatus",
+            type: "uint8",
+          },
+        ],
+        internalType: "struct FHEBridge.Intent",
+        name: "intent",
+        type: "tuple",
+      },
+    ],
+    name: "fulfill",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -332,7 +617,7 @@ export const abi = [
             type: "int32",
           },
         ],
-        internalType: "struct inEuint32",
+        internalType: "struct inEuint64",
         name: "_encryptedAmount",
         type: "tuple",
       },
@@ -342,4 +627,6 @@ export const abi = [
     stateMutability: "nonpayable",
     type: "function",
   },
-];
+] as const;
+
+export default abi;

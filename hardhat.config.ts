@@ -25,11 +25,17 @@ const deployerPrivateKey =
 
 const relayerPrivateKey = process.env.RELAYER_PRIVATE_KEY;
 const userPrivateKey = process.env.USER_PRIVATE_KEY;
+const faucetPrivateKey = process.env.FAUCET_PRIVATE_KEY;
 // If not set, it uses ours Etherscan default API key.
 const etherscanApiKey =
   process.env.ETHERSCAN_API_KEY || "DNXJA8RX2Q3VZ4URQIWP7Z68CJXQZSC6AW";
 
-const accounts = [deployerPrivateKey, userPrivateKey, relayerPrivateKey];
+const accounts = [
+  deployerPrivateKey,
+  userPrivateKey,
+  relayerPrivateKey,
+  faucetPrivateKey,
+];
 
 const config = {
   solidity: {

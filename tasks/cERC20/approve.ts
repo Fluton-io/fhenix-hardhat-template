@@ -18,7 +18,7 @@ task("approve", "Approve cERC20 contract to spend USDC")
       );
 
       const encryptedAmount = await fhenixjs.encrypt_uint64(BigInt(amount));
-      await await contract["approveEncrypted(address,(bytes,int32))"](
+      await contract["approveEncrypted(address,(bytes,int32))"](
         spenderaddress,
         encryptedAmount,
       );

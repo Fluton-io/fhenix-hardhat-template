@@ -1,12 +1,28 @@
-export const abi = [
-  { inputs: [], stateMutability: "nonpayable", type: "constructor" },
+const abi = [
   {
-    inputs: [{ internalType: "address", name: "owner", type: "address" }],
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "owner",
+        type: "address",
+      },
+    ],
     name: "OwnableInvalidOwner",
     type: "error",
   },
   {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
+    ],
     name: "OwnableUnauthorizedAccount",
     type: "error",
   },
@@ -70,7 +86,12 @@ export const abi = [
         name: "tokenAddress",
         type: "address",
       },
-      { indexed: false, internalType: "eaddress", name: "to", type: "uint256" },
+      {
+        indexed: false,
+        internalType: "eaddress",
+        name: "to",
+        type: "uint256",
+      },
       {
         indexed: false,
         internalType: "euint64",
@@ -96,11 +117,31 @@ export const abi = [
   },
   {
     inputs: [
-      { internalType: "address", name: "tokenAddress", type: "address" },
-      { internalType: "einput", name: "_encryptedTo", type: "bytes32" },
-      { internalType: "einput", name: "_encryptedAmount", type: "bytes32" },
-      { internalType: "bytes", name: "_inputProof", type: "bytes" },
-      { internalType: "address", name: "_relayerAddress", type: "address" },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "einput",
+        name: "_encryptedTo",
+        type: "bytes32",
+      },
+      {
+        internalType: "einput",
+        name: "_encryptedAmount",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes",
+        name: "_inputProof",
+        type: "bytes",
+      },
+      {
+        internalType: "address",
+        name: "_relayerAddress",
+        type: "address",
+      },
     ],
     name: "bridgeCERC20",
     outputs: [],
@@ -108,13 +149,35 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    inputs: [
+      {
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
     name: "intents",
     outputs: [
-      { internalType: "address", name: "tokenAddress", type: "address" },
-      { internalType: "address", name: "from", type: "address" },
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "euint64", name: "encryptedAmount", type: "uint256" },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "from",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "to",
+        type: "address",
+      },
+      {
+        internalType: "euint64",
+        name: "encryptedAmount",
+        type: "uint256",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -122,16 +185,38 @@ export const abi = [
   {
     inputs: [],
     name: "nextIntentId",
-    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
+    outputs: [
+      {
+        internalType: "uint64",
+        name: "",
+        type: "uint64",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [
-      { internalType: "address", name: "tokenAddress", type: "address" },
-      { internalType: "address", name: "_to", type: "address" },
-      { internalType: "einput", name: "_encryptedAmount", type: "bytes32" },
-      { internalType: "bytes", name: "inputProof", type: "bytes" },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_to",
+        type: "address",
+      },
+      {
+        internalType: "einput",
+        name: "_encryptedAmount",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes",
+        name: "inputProof",
+        type: "bytes",
+      },
     ],
     name: "onRecvIntent",
     outputs: [],
@@ -141,14 +226,26 @@ export const abi = [
   {
     inputs: [],
     name: "owner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
   {
     inputs: [],
     name: "pendingOwner",
-    outputs: [{ internalType: "address", name: "", type: "address" }],
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
     stateMutability: "view",
     type: "function",
   },
@@ -160,7 +257,13 @@ export const abi = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
     name: "transferOwnership",
     outputs: [],
     stateMutability: "nonpayable",
@@ -168,9 +271,21 @@ export const abi = [
   },
   {
     inputs: [
-      { internalType: "address", name: "tokenAddress", type: "address" },
-      { internalType: "einput", name: "_encryptedAmount", type: "bytes32" },
-      { internalType: "bytes", name: "_inputProof", type: "bytes" },
+      {
+        internalType: "address",
+        name: "tokenAddress",
+        type: "address",
+      },
+      {
+        internalType: "einput",
+        name: "_encryptedAmount",
+        type: "bytes32",
+      },
+      {
+        internalType: "bytes",
+        name: "_inputProof",
+        type: "bytes",
+      },
     ],
     name: "withdraw",
     outputs: [],
@@ -178,3 +293,5 @@ export const abi = [
     type: "function",
   },
 ] as const;
+
+export default abi;
